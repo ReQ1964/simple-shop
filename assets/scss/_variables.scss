@@ -1,0 +1,12 @@
+$primary_color: black;
+$secondary_color: hsl(0, 0, 84);
+
+@mixin flex-center-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+@mixin flex-center-column{
+    @include flex-center-row;
+    flex-direction: column;
+}

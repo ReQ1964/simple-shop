@@ -1,0 +1,24 @@
+.content{
+    @include flex-center-column;
+    gap: 2.5rem;
+    align-self: center;
+}
+.card{
+    @include flex-center-column;
+    gap: 0.5rem;
+    width: 300px;
+    &__img{
+        width: 100%;
+        transition: all 0.1s;
+    }
+    &__title{
+        font-size: clamp(1.5rem, 1.6vw, 1.8rem);
+    }
+    &__price{
+        font-size: clamp(1rem, 1.6vw, 1.2rem);
+    }
+    .card__icon{
+        font-size: 2rem;
+        cursor: pointer;
+    }
+}

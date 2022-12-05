@@ -1,0 +1,25 @@
+.footer{
+    @include flex-center-column;
+    color: hsl(0, 0, 84);
+    padding: 1rem;
+    margin-top: 2.5rem;
+    gap: 1rem;
+    &, & *{
+        background-color: black;
+        font-size: 0.8rem;
+    }
+    &__policy{
+        @include flex-center-row;
+        gap: 1rem;
+        .policy{
+            text-decoration: none;
+            color: inherit;
+        }
+    }
+    &__social-link{
+        width: 200px;
+    }
+
+    
+}
+

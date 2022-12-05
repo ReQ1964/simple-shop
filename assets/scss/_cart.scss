@@ -1,0 +1,87 @@
+.cart{
+    position: fixed;
+    display: none;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    padding: 2rem;
+    box-shadow: 2px 2px 7px black;
+    overflow: scroll;
+    
+    .cart__close{
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.15s;
+        &:hover{
+            transform: scale(1.05);
+        }
+    }
+    &__title{
+        text-transform: uppercase;
+        text-align: center;
+        margin: 1.2rem;
+        border-bottom: 1px solid black;
+        padding-bottom: 0.8rem;
+    }
+    &__buy{
+        padding: 1rem 2rem;
+        text-transform: uppercase;
+        display: block;
+        margin: 1rem auto;
+        background-color: green;
+        border-radius: 0.2rem;
+        color: white;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        transition: all 0.15s;
+        &:hover{
+            transform: scale(1.05);
+        }
+    }
+    &__item{
+        @include flex-center-row;
+        margin: 0 auto;
+        height: 20%;
+        width: 100%;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        border: 1px solid black;
+        .item__img{
+            width: 40%;
+            max-width: 200px;
+            height: 100%;
+        }
+        .item__description{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            width: 50%;
+            gap: 1rem;
+        }
+        .item__quantity{
+            width: 2.3rem;
+        }
+        .item__delete{
+            font-size: 2rem;
+            color: red;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.15s;
+            &:hover{
+                transform: scale(1.05);
+            }
+        }
+        .item__title{
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+        }
+    }
+}

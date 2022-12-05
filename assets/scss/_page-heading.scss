@@ -1,0 +1,47 @@
+.page-heading{
+    @include flex-center-column;
+    padding: 2rem 0;
+    &__title{
+        font-size: clamp(3rem, 3.5vw, 6rem)
+    }
+
+    .navbar{
+        @extend .page-heading;
+        gap: 1.5rem;
+        &__filters{
+            @include flex-center-column;
+            gap: 1.2rem;
+            .filters__search{
+                @include flex-center-row;
+                .filters__icon{
+                    font-size: 2rem
+                }
+                .filters__input{
+                    width: clamp(150px, 50vw, 150px);
+                }
+            }
+            .filters__filter{
+                @include flex-center-row;
+                gap: 0.5rem;
+                .filters__label{
+                    font-size: clamp(1rem, 1.2vw, 1.3rem);
+                }
+            }
+
+        }
+        &__btn{
+            padding: 0.5rem;
+            background-color: $secondary_color;
+            width: clamp(300px, 80vw, 400px);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.1s;
+            font-size: clamp(1rem, 1.2vw, 1.3rem);
+            border: 1px solid black;
+            &:hover{
+                transform: scale(1.02);
+                background-color: darken($secondary_color, $amount: 4);
+            }
+        }
+    }
+}
