@@ -20,5 +20,9 @@
     .card__icon{
         font-size: 2rem;
         cursor: pointer;
+        transition: all 0.15s;
+        &:hover{
+            transform: scale(1.05);
+        }
     }
 }

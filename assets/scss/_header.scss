@@ -6,19 +6,29 @@
         font-size: clamp(2rem, 3vw, 2.3rem);;
         color: white;
         cursor: pointer;
+        transition: all 0.15s;
+        &:hover{
+            transform: scale(1.05);
+        }
     }
     & *{
         background-color: black;
     }
     .heading{
+        transition: all 0.15s;
+        &:hover{
+            transform: scale(1.01);
+        }
         @include flex-center-row;
         &__logo{
-            width: clamp(2.2rem, 2.5vw, 6rem);;
+            width: clamp(2.2rem, 2.5vw, 6rem);
+
         }
         &__title{
             color: white;
             font-size: clamp(1.8rem, 2.5vw, 2.5rem);
             text-decoration: none;
         }
+
     }
 }

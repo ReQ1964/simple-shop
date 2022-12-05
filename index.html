@@ -36,12 +36,16 @@
 				<button class="navbar__btn">microphones</button>
 				<div class="navbar__filters">
 					<div class="filters__search">
-						<span class="material-symbols-outlined filters__icon"> search</span>
-						<input type="text" class="filters__input" />
+						<label for="filters__input" class="filters__label"
+							><span class="material-symbols-outlined filters__icon">
+								search</span
+							></label
+						>
+						<input type="text" id="filters__input" />
 					</div>
 					<div class="filters__filter">
 						<label for="filters__select" class="filters__label">Sort:</label>
-						<select name="filters__select" id="" class="filters__select">
+						<select id="filters__select">
 							<optgroup label="Alphabetical">
 								<option value="">A-Z</option>
 								<option value="">Z-A</option>

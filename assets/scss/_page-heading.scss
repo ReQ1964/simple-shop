@@ -13,19 +13,32 @@
             gap: 1.2rem;
             .filters__search{
                 @include flex-center-row;
+                transition: all 0.15s;
+                &:hover{
+                    transform: scale(1.02);
+                }
                 .filters__icon{
                     font-size: 2rem
                 }
-                .filters__input{
+                #filters__input{
                     width: clamp(150px, 50vw, 150px);
                 }
+                .filters__label{
+                    @include flex-center-row;
+                }
+                
             }
             .filters__filter{
                 @include flex-center-row;
                 gap: 0.5rem;
+                transition: all 0.15s;
+                &:hover{
+                    transform: scale(1.02);
+                }
                 .filters__label{
                     font-size: clamp(1rem, 1.2vw, 1.3rem);
                 }
+ 
             }
 
         }
