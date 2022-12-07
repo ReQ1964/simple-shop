@@ -197,7 +197,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  gap: 2.5rem;
+  gap: 4rem;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
@@ -217,11 +217,13 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   width: 300px;
+  height: 300px;
 }
 .card__img {
-  width: 100%;
+  width: 70%;
+  height: 70%;
   -webkit-transition: all 0.1s;
   transition: all 0.1s;
 }
@@ -258,7 +260,7 @@ body {
           flex-direction: column;
   color: hsl(0deg, 0%, 84%);
   padding: 1rem;
-  margin-top: 2.5rem;
+  margin-top: 4rem;
   gap: 1rem;
 }
 .footer, .footer * {
@@ -398,17 +400,15 @@ body {
   .content {
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 1fr 2rem 1fr;
+    -ms-grid-columns: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    max-width: 1000px;
   }
 }
 @media (min-width: 1000px) {
   .content {
-    -ms-grid-columns: 1fr 3rem 1fr 3rem 1fr;
+    -ms-grid-columns: 1fr 5rem 1fr 5rem 1fr;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 3rem;
+    gap: 5rem;
   }
   .header {
     gap: 2rem;
