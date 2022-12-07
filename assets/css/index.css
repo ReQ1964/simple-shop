@@ -167,19 +167,20 @@ body {
 }
 .page-heading .navbar__btn {
   padding: 0.5rem;
-  background-color: hsl(0deg, 0%, 84%);
+  background-color: black;
+  border-radius: 0.2rem;
   width: clamp(300px, 80vw, 400px);
   text-transform: uppercase;
   cursor: pointer;
   -webkit-transition: all 0.1s;
   transition: all 0.1s;
-  font-size: clamp(1rem, 1.2vw, 1.3rem);
-  border: 1px solid black;
+  font-size: clamp(1rem, 1.25vw, 1.3rem);
+  color: white;
 }
 .page-heading .navbar__btn:hover {
   -webkit-transform: scale(1.02);
           transform: scale(1.02);
-  background-color: #cccccc;
+  background-color: black;
 }
 
 .content {

@@ -44,16 +44,17 @@
         }
         &__btn{
             padding: 0.5rem;
-            background-color: $secondary_color;
+            background-color: black;
+            border-radius: 0.2rem;
             width: clamp(300px, 80vw, 400px);
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.1s;
-            font-size: clamp(1rem, 1.2vw, 1.3rem);
-            border: 1px solid black;
+            font-size: clamp(1rem, 1.25vw, 1.3rem);
+            color: white;
             &:hover{
                 transform: scale(1.02);
-                background-color: darken($secondary_color, $amount: 4);
+                background-color: darken(black, $amount: 4);
             }
         }
     }
