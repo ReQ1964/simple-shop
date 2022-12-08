@@ -81,6 +81,24 @@ const shopItems = [
 
 const cartItems = [];
 
+const cartContentHandler = () => {
+	cartContent.innerHTML = '';
+	cartItems.forEach((item, itemIndex) => {
+		cartContent.innerHTML += `
+			<div class="cart__item" id="${itemIndex}">
+				<img src="${item.img}" alt="" class="item__img" />
+				<div class="item__description">
+					<h2 class="item__title">${item.title}</h2>
+					<p class="item__price">$${item.price}</p>
+					<input type="number" class="item__quantity" value="${item.quantity}" max="99" min="1" data-key="0" />
+				</div>
+				<span class="material-symbols-outlined item__delete" data-key="0">delete</span>
+			</div>
+		
+		`;
+	});
+};
+
 // SHOP CONTENT RENDER HANDLER
 
 const shopContentHandler = () => {
@@ -111,6 +129,7 @@ const shopContentHandler = () => {
 				cartItems.push(shopItems[shopItemId]);
 				cartItems[shopItemId].quantity++;
 			}
+			cartContentHandler();
 			console.log(cartItems);
 		}
 	});
@@ -128,7 +147,8 @@ cartOpenBtn.addEventListener('click', () => {
 document.body.addEventListener('click', (event) => {
 	if (
 		(!event.target.closest('.cart') &&
-			!event.target.matches('.header__icon')) ||
+			!event.target.matches('.header__icon') &&
+			!event.target.matches('.card__icon')) ||
 		event.target.matches('.cart__close')
 	) {
 		cartBody.classList.remove('cart--visible');
