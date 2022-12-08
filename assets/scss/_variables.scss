@@ -10,3 +10,7 @@ $secondary_color: hsl(0, 0, 84);
     @include flex-center-row;
     flex-direction: column;
 }
+
+section.cart--visible{
+    display: block;
+}

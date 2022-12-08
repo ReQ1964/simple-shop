@@ -1,4 +1,8 @@
 const shopContent = document.querySelector('.content');
+const cartBody = document.querySelector('.cart');
+const cartContent = document.querySelector('.cart__content');
+const cartOpenBtn = document.querySelectorAll('.header__icon')[1];
+const cartCloseBtn = document.querySelector('.cart__close');
 
 const shopItems = [
 	{
@@ -98,12 +102,35 @@ const shopContentHandler = () => {
 
 	shopContent.addEventListener('click', (event) => {
 		if (event.target.tagName === 'SPAN') {
-			const shopItemId = event.target.closest('div').id;
-			// dodaj sprawdzanie czy juz istnieje duplikat, zwieksz quantity
-			// jesli nie
-			cartItems.push(shopItems[shopItemId]);
+			const shopItemId = parseInt(event.target.closest('div').id);
+			const isContain = cartItems.some((item) => item.id == shopItemId);
+			// fix, not shopitemid as identifier, wrong one
+			if (isContain) {
+				cartItems[shopItemId].quantity++;
+			} else {
+				cartItems.push(shopItems[shopItemId]);
+				cartItems[shopItemId].quantity++;
+			}
 			console.log(cartItems);
 		}
 	});
 };
 shopContentHandler();
+
+// CART OPEN AND CLOSE HANDLERS
+
+cartOpenBtn.addEventListener('click', () => {
+	cartBody.classList.add('cart--visible');
+});
+// cartCloseBtn.addEventListener('click', () => {
+// 	cartBody.classList.remove('cart--visible');
+// });
+document.body.addEventListener('click', (event) => {
+	if (
+		(!event.target.closest('.cart') &&
+			!event.target.matches('.header__icon')) ||
+		event.target.matches('.cart__close')
+	) {
+		cartBody.classList.remove('cart--visible');
+	}
+});
