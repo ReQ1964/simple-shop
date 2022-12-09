@@ -14,3 +14,6 @@ $secondary_color: hsl(0, 0, 84);
 section.cart--visible{
     display: block;
 }
+.navbar__btn--active{
+    border: 5px solid rgb(4, 151, 4);
+}

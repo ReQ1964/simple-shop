@@ -2,7 +2,8 @@
     @include flex-center-column;
     padding: 2rem 0;
     &__title{
-        font-size: clamp(3rem, 3.5vw, 6rem)
+        font-size: clamp(3rem, 3.5vw, 6rem);
+        cursor:pointer;
     }
 
     .navbar{
