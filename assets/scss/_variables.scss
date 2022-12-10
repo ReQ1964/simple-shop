@@ -15,5 +15,6 @@ section.cart--visible{
     display: block;
 }
 .navbar__btn--active{
-    border: 5px solid rgb(4, 151, 4);
+    box-shadow: 0 0 0 4px rgba(180, 51, 51, 0.89);
+    border-radius: 0.2rem;
 }

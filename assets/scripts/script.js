@@ -91,6 +91,10 @@ const filterBtnTermHandler = (term) => {
 	shopContentHandler(term.trim());
 	filterInput.value = '';
 };
+const btnHighlightHandler = (index) => {
+	filterBtns.forEach((btn) => btn.classList.remove('navbar__btn--active'));
+	filterBtns[index].classList.add('navbar__btn--active');
+};
 
 const cartContentHandler = () => {
 	cartContent.innerHTML = '';
@@ -121,9 +125,9 @@ const shopContentHandler = (filter = '') => {
 					shopItem.title.toLowerCase().includes(filter.toLowerCase()) ||
 					shopItem.category.toLowerCase().includes(filter.toLowerCase())
 		  );
-	filteredShopItems.forEach((item, itemIndex) => {
+	filteredShopItems.forEach((item) => {
 		shopContent.innerHTML += `
-            <div class="card" id="${itemIndex}">
+            <div class="card" id="${item.id}">
 				<img src="${item.img}" alt="" class="card__img" />
 				<h2 class="card__title">${item.title}</h2>
 				<p class="card__price">$${item.price}</p>
@@ -133,24 +137,6 @@ const shopContentHandler = (filter = '') => {
 			</div>
         
         `;
-	});
-
-	// SHOP CONTENT ADD TO CART HANDLER
-
-	shopContent.addEventListener('click', (event) => {
-		if (event.target.tagName === 'SPAN') {
-			const shopItemId = parseInt(event.target.closest('div').id);
-			const isContain = cartItems.some((item) => item.id == shopItemId);
-			// fix, not shopitemid as identifier, wrong one
-			if (isContain) {
-				cartItems[shopItemId].quantity++;
-			} else {
-				cartItems.push(shopItems[shopItemId]);
-				cartItems[shopItemId].quantity++;
-			}
-			cartContentHandler();
-			console.log(cartItems);
-		}
 	});
 };
 shopContentHandler();
@@ -172,15 +158,37 @@ document.body.addEventListener('click', (event) => {
 	}
 });
 
+// SHOP FILTERS HANDLERS
+
 filterInput.addEventListener('keyup', filterInputTermHandler);
 filterBtns.forEach((btn, index) => {
 	btn.addEventListener('click', (event) => {
-		// add highlight remover
-		filterBtns[index].classList.add('navbar__btn--active');
+		btnHighlightHandler(index);
+
 		if (event.target.tagName === 'H1') {
-			shopContentHandler('');
+			shopContentHandler();
 		} else {
 			filterBtnTermHandler(btn.textContent);
 		}
 	});
+});
+
+// SHOP CONTENT ADD TO CART HANDLER
+
+shopContent.addEventListener('click', (event) => {
+	if (event.target.tagName === 'SPAN') {
+		const shopItemId = parseInt(event.target.closest('div').id);
+		const isContain = cartItems.some((item) => item.id == shopItemId);
+		cartBody.classList.add('cart--visible');
+		// fix, not shopitemid as identifier, wrong one
+		if (isContain) {
+			cartItems[shopItemId].quantity++;
+		} else {
+			cartItems.push(shopItems[shopItemId]);
+			cartItems[shopItemId].quantity++;
+		}
+		console.log(shopItemId);
+		cartContentHandler();
+		console.log(cartItems);
+	}
 });

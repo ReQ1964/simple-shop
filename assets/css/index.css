@@ -4,7 +4,9 @@ section.cart--visible {
 }
 
 .navbar__btn--active {
-  border: 5px solid rgb(4, 151, 4);
+  -webkit-box-shadow: 0 0 0 4px rgba(180, 51, 51, 0.89);
+          box-shadow: 0 0 0 4px rgba(180, 51, 51, 0.89);
+  border-radius: 0.2rem;
 }
 
 * {
@@ -95,10 +97,18 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
   padding: 2rem 0;
+  gap: 1rem;
 }
 .page-heading__title {
   font-size: clamp(3rem, 3.5vw, 6rem);
   cursor: pointer;
+  -webkit-transition: all 0.15s;
+  transition: all 0.15s;
+  padding: 0.5rem;
+}
+.page-heading__title:hover {
+  -webkit-transform: scale(1.02);
+          transform: scale(1.02);
 }
 .page-heading .navbar {
   gap: 1.5rem;
@@ -181,8 +191,8 @@ body {
   width: clamp(300px, 80vw, 400px);
   text-transform: uppercase;
   cursor: pointer;
-  -webkit-transition: all 0.1s;
-  transition: all 0.1s;
+  -webkit-transition: all 0.15s;
+  transition: all 0.15s;
   font-size: clamp(1rem, 1.25vw, 1.3rem);
   color: white;
 }
