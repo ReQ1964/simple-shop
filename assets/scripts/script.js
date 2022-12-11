@@ -83,9 +83,16 @@ const shopItems = [
 
 const cartItems = [];
 
+const cartQuantityHandler = (title) => {
+	cartItems.forEach((cartItem) =>
+		cartItem.title === title ? cartItem.quantity++ : ''
+	);
+};
+
 const filterInputTermHandler = () => {
 	const filterTerm = filterInput.value;
 	shopContentHandler(filterTerm.trim());
+	btnHighlightHandler(0);
 };
 const filterBtnTermHandler = (term) => {
 	shopContentHandler(term.trim());
@@ -178,14 +185,19 @@ filterBtns.forEach((btn, index) => {
 shopContent.addEventListener('click', (event) => {
 	if (event.target.tagName === 'SPAN') {
 		const shopItemId = parseInt(event.target.closest('div').id);
+		const shopItemTitle = event.target
+			.closest('div')
+			.querySelector('.card__title').textContent;
+		console.log(shopItemTitle);
+		// compare div title to item.title
 		const isContain = cartItems.some((item) => item.id == shopItemId);
 		cartBody.classList.add('cart--visible');
 		// fix, not shopitemid as identifier, wrong one
 		if (isContain) {
-			cartItems[shopItemId].quantity++;
+			cartQuantityHandler(shopItemTitle);
 		} else {
 			cartItems.push(shopItems[shopItemId]);
-			cartItems[shopItemId].quantity++;
+			cartQuantityHandler(shopItemTitle);
 		}
 		console.log(shopItemId);
 		cartContentHandler();
