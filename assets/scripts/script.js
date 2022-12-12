@@ -5,6 +5,8 @@ const cartOpenBtn = document.querySelectorAll('.header__icon')[1];
 const cartCloseBtn = document.querySelector('.cart__close');
 const filterInput = document.querySelector('#filters__input');
 const filterBtns = [...document.querySelectorAll('.btn--filter')];
+const buyBtn = document.querySelector('.cart__buy');
+const cartPrice = document.querySelector('.cart__price');
 
 const shopItems = [
 	{
@@ -87,6 +89,25 @@ const cartQuantityHandler = (title) => {
 	cartItems.forEach((cartItem) =>
 		cartItem.title === title ? cartItem.quantity++ : ''
 	);
+};
+
+const cartInputQuantityHandler = () => {
+	cartItems.forEach((cartItem) =>
+		cartItem.title === title ? cartItem.quantity++ : ''
+	);
+};
+// HERE
+
+const cartPriceHandler = () => {
+	cartPrice.textContent = `Total price: $${cartItems.reduce((total, item) => {
+		return total + item.quantity * item.price;
+	}, 0)}
+	`;
+};
+
+const buyHandler = () => {
+	cartItems.length = 0;
+	cartContentHandler();
 };
 
 const filterInputTermHandler = () => {
@@ -188,19 +209,26 @@ shopContent.addEventListener('click', (event) => {
 		const shopItemTitle = event.target
 			.closest('div')
 			.querySelector('.card__title').textContent;
-		console.log(shopItemTitle);
-		// compare div title to item.title
 		const isContain = cartItems.some((item) => item.id == shopItemId);
+
 		cartBody.classList.add('cart--visible');
-		// fix, not shopitemid as identifier, wrong one
 		if (isContain) {
 			cartQuantityHandler(shopItemTitle);
 		} else {
 			cartItems.push(shopItems[shopItemId]);
 			cartQuantityHandler(shopItemTitle);
 		}
-		console.log(shopItemId);
 		cartContentHandler();
-		console.log(cartItems);
+		cartPriceHandler();
 	}
 });
+
+// CART CONTENT QUANTITY
+cartContent.addEventListener('click', (event) => {
+	if (event.target.tagName === 'INPUT') {
+	}
+});
+
+// CART BUY HANDLER
+
+buyBtn.addEventListener('click', buyHandler);
