@@ -16,7 +16,6 @@ const shopItems = [
 		img: 'assets/images/head1.png',
 		category: 'headphones',
 		quantity: 0,
-		id: 0,
 	},
 	{
 		title: 'Headphones2',
@@ -24,7 +23,6 @@ const shopItems = [
 		img: 'assets/images/head2.png',
 		category: 'headphones',
 		quantity: 0,
-		id: 1,
 	},
 	{
 		title: 'Headphones3',
@@ -32,7 +30,6 @@ const shopItems = [
 		img: 'assets/images/head3.png',
 		category: 'headphones',
 		quantity: 0,
-		id: 2,
 	},
 	{
 		title: 'Headphones4',
@@ -40,7 +37,6 @@ const shopItems = [
 		img: 'assets/images/head4.png',
 		category: 'headphones',
 		quantity: 0,
-		id: 3,
 	},
 	{
 		title: 'Earbuds1',
@@ -48,7 +44,6 @@ const shopItems = [
 		img: 'assets/images/buds1.png',
 		category: 'earbuds',
 		quantity: 0,
-		id: 4,
 	},
 	{
 		title: 'Earbuds2',
@@ -56,7 +51,6 @@ const shopItems = [
 		img: 'assets/images/buds2.png',
 		category: 'earbuds',
 		quantity: 0,
-		id: 5,
 	},
 	{
 		title: 'Microphone1',
@@ -64,7 +58,6 @@ const shopItems = [
 		img: 'assets/images/mic1.png',
 		category: 'microphones',
 		quantity: 0,
-		id: 6,
 	},
 	{
 		title: 'Microphone2',
@@ -72,7 +65,6 @@ const shopItems = [
 		img: 'assets/images/mic2.png',
 		category: 'microphones',
 		quantity: 0,
-		id: 7,
 	},
 	{
 		title: 'Microphone3',
@@ -80,7 +72,6 @@ const shopItems = [
 		img: 'assets/images/mic3.png',
 		category: 'microphones',
 		quantity: 0,
-		id: 8,
 	},
 ];
 
@@ -99,12 +90,13 @@ const sortHandler = (event) => {
 	} else if (selected == 'htl') {
 		shopItems.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
 	}
+	btnHighlightHandler(0);
 	shopContentHandler();
 };
 
-const cartQuantityHandler = (id) => {
+const cartQuantityHandler = (title) => {
 	cartItems.forEach((cartItem) =>
-		cartItem.id === id ? cartItem.quantity++ : ''
+		cartItem.title === title ? cartItem.quantity++ : ''
 	);
 };
 
@@ -137,9 +129,9 @@ const btnHighlightHandler = (index) => {
 
 const cartContentHandler = () => {
 	cartContent.innerHTML = '';
-	cartItems.forEach((item, itemIndex) => {
+	cartItems.forEach((item) => {
 		cartContent.innerHTML += `
-			<div class="cart__item" id="${itemIndex}">
+			<div class="cart__item">
 				<img src="${item.img}" alt="" class="item__img" />
 				<div class="item__description">
 					<h2 class="item__title">${item.title}</h2>
@@ -159,7 +151,6 @@ cartContent.addEventListener('click', (event) => {
 	const cartItemTitle = event.target
 		.closest('div')
 		.querySelector('.item__title').textContent;
-	const cartItemId = parseInt(event.target.closest('div').id);
 
 	if (event.target.tagName === 'INPUT') {
 		const cartInputValue = event.target.closest('input').value;
@@ -170,10 +161,13 @@ cartContent.addEventListener('click', (event) => {
 		);
 	} else if (event.target.tagName === 'SPAN') {
 		cartItems.forEach((cartItem) => {
-			cartItem.title === cartItemTitle ? cartItems.splice(cartItemId, 1) : '';
+			if (cartItem.title === cartItemTitle) {
+				const itemIndex = cartItems.indexOf(cartItem);
+				cartItems.splice(itemIndex, 1);
+			}
 		});
 	}
-
+	// cartItems.splice(cartItemId, 1)
 	cartContentHandler();
 	cartPriceHandler();
 });
@@ -191,7 +185,7 @@ const shopContentHandler = (filter = '') => {
 		  );
 	filteredShopItems.forEach((item) => {
 		shopContent.innerHTML += `
-            <div class="card" id="${item.id}">
+            <div class="card">
 				<img src="${item.img}" alt="" class="card__img" />
 				<h2 class="card__title">${item.title}</h2>
 				<p class="card__price">$${item.price}</p>
@@ -209,20 +203,22 @@ shopContentHandler();
 
 shopContent.addEventListener('click', (event) => {
 	if (event.target.tagName === 'SPAN') {
-		const shopItemId = parseInt(event.target.closest('div').id);
 		const shopItemTitle = event.target
 			.closest('div')
 			.querySelector('.card__title').textContent;
 		const isContain = cartItems.some((item) => item.title == shopItemTitle);
 
 		cartBody.classList.add('cart--visible');
+
 		if (isContain) {
-			cartQuantityHandler(shopItemId);
+			cartQuantityHandler(shopItemTitle);
 		} else {
-			if (shopItems[shopItemId].title === shopItemTitle) {
-				cartItems.push(shopItems[shopItemId]);
-				cartQuantityHandler(shopItemId);
-			}
+			shopItems.forEach((shopItem) => {
+				if (shopItem.title === shopItemTitle) {
+					cartItems.push(shopItem);
+					cartQuantityHandler(shopItemTitle);
+				}
+			});
 		}
 		cartContentHandler();
 		cartPriceHandler();
@@ -276,3 +272,8 @@ cartContent.addEventListener('click', (event) => {
 buyBtn.addEventListener('click', buyHandler);
 
 sortFilter.addEventListener('change', sortHandler);
+
+// 1. Naprawić renderowanie contentu sklepu zepsute przez sortowanie.
+// 2. Dać opcję sortowania dzialajac z filter buttonami (cos z filteredShopItems).
+// 3. Sprawdzić cały kod czy brakuje funkcji.
+// 4. Refaktoryzacja.
