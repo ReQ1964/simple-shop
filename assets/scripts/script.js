@@ -9,6 +9,7 @@ const buyBtn = document.querySelector('.cart__buy');
 const cartPrice = document.querySelector('.cart__price');
 const sortFilter = document.querySelector('#filters__select');
 
+let filterCategory;
 const shopItems = [
 	{
 		title: 'Headphones1',
@@ -77,21 +78,17 @@ const shopItems = [
 
 const cartItems = [];
 
-console.log(sortFilter.options[0].value);
-
-const sortHandler = (event) => {
-	const selected = (sortFilter.value = event.target.value);
+const sortHandler = (items) => {
+	const selected = sortFilter.value;
 	if (selected == 'A-Z') {
-		shopItems.sort((a, b) => a.title.localeCompare(b.title));
+		items.sort((a, b) => a.title.localeCompare(b.title));
 	} else if (selected == 'Z-A') {
-		shopItems.sort((a, b) => -1 * a.title.localeCompare(b.title));
+		items.sort((a, b) => -1 * a.title.localeCompare(b.title));
 	} else if (selected == 'lth') {
-		shopItems.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+		items.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
 	} else if (selected == 'htl') {
-		shopItems.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+		items.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
 	}
-	btnHighlightHandler(0);
-	shopContentHandler();
 };
 
 const cartQuantityHandler = (title) => {
@@ -109,16 +106,18 @@ const cartPriceHandler = () => {
 
 const buyHandler = () => {
 	cartItems.length = 0;
-	cartContentHandler();
 	cartPrice.textContent = 'Total price: $0';
+	shopItems.forEach((shopItem) => (shopItem.quantity = 0));
+	cartContentHandler();
 };
 
-const filterInputTermHandler = () => {
-	const filterTerm = filterInput.value;
-	shopContentHandler(filterTerm.trim());
+const filterInputCategoryHandler = () => {
+	filterCategory = filterInput.value;
+	shopContentHandler(filterCategory.trim());
 	btnHighlightHandler(0);
 };
-const filterBtnTermHandler = (term) => {
+const filterBtnCategoryHandler = (term) => {
+	filterCategory = term;
 	shopContentHandler(term.trim());
 	filterInput.value = '';
 };
@@ -163,11 +162,11 @@ cartContent.addEventListener('click', (event) => {
 		cartItems.forEach((cartItem) => {
 			if (cartItem.title === cartItemTitle) {
 				const itemIndex = cartItems.indexOf(cartItem);
+				cartItem.quantity = 0;
 				cartItems.splice(itemIndex, 1);
 			}
 		});
 	}
-	// cartItems.splice(cartItemId, 1)
 	cartContentHandler();
 	cartPriceHandler();
 });
@@ -176,6 +175,7 @@ cartContent.addEventListener('click', (event) => {
 
 const shopContentHandler = (filter = '') => {
 	shopContent.innerHTML = '';
+	sortHandler(shopItems);
 	filteredShopItems = !filter
 		? shopItems
 		: shopItems.filter(
@@ -183,6 +183,7 @@ const shopContentHandler = (filter = '') => {
 					shopItem.title.toLowerCase().includes(filter.toLowerCase()) ||
 					shopItem.category.toLowerCase().includes(filter.toLowerCase())
 		  );
+
 	filteredShopItems.forEach((item) => {
 		shopContent.innerHTML += `
             <div class="card">
@@ -248,15 +249,16 @@ document.body.addEventListener('click', (event) => {
 
 // SHOP FILTERS HANDLERS
 
-filterInput.addEventListener('keyup', filterInputTermHandler);
+filterInput.addEventListener('keyup', filterInputCategoryHandler);
 filterBtns.forEach((btn, index) => {
 	btn.addEventListener('click', (event) => {
 		btnHighlightHandler(index);
 
 		if (event.target.tagName === 'H1') {
 			shopContentHandler();
+			filterCategory = '';
 		} else {
-			filterBtnTermHandler(btn.textContent);
+			filterBtnCategoryHandler(btn.textContent);
 		}
 	});
 });
@@ -271,9 +273,12 @@ cartContent.addEventListener('click', (event) => {
 
 buyBtn.addEventListener('click', buyHandler);
 
-sortFilter.addEventListener('change', sortHandler);
+sortFilter.addEventListener('change', () => {
+	shopContentHandler(filterCategory);
+});
 
-// 1. Naprawić renderowanie contentu sklepu zepsute przez sortowanie.
-// 2. Dać opcję sortowania dzialajac z filter buttonami (cos z filteredShopItems).
 // 3. Sprawdzić cały kod czy brakuje funkcji.
 // 4. Refaktoryzacja.
+// COS JEST NIE TAK Z QUANTITY, POWIAZANIE SHOP ITEMS Z CART ITEMS, PO USUNIECIU ZOSTAJE QUANTITY
+
+// ^^^^^^^^^^^^^^^^^ 	shopItems.forEach((shopItem) => (shopItem.quantity = 0)); TYMCZASOWY FIX
