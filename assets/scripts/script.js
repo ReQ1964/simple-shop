@@ -1,15 +1,16 @@
-const cartOpenBtn = document.querySelectorAll('.header__icon')[1];
-const sortFilter = document.querySelector('#navbar__select');
+const filterSort = document.querySelector('#navbar__select');
 const filterInput = document.querySelector('#navbar__input');
 const filterBtns = [...document.querySelectorAll('.btn--filter')];
 const shopContent = document.querySelector('.content');
 const cartBody = document.querySelector('.cart');
 const cartContent = document.querySelector('.cart__content');
+const cartOpenBtn = document.querySelectorAll('.header__icon')[1];
 const cartCloseBtn = document.querySelector('.cart__close');
 const cartPrice = document.querySelector('.cart__price');
-const buyBtn = document.querySelector('.cart__buy');
+const cartBuyBtn = document.querySelector('.cart__buy');
 
 let filterCategory;
+
 const shopItems = [
 	{
 		title: 'Headphones1',
@@ -78,24 +79,37 @@ const shopItems = [
 
 const cartItems = [];
 
+// Handlers to manage shopContent filtering and sorting [NAVBAR]
+const inputFilterHandler = () => {
+	filterCategory = filterInput.value;
+	shopContentRenderer(filterCategory.trim());
+	btnHighlightHandler(0);
+};
+const btnFilterHandler = (term) => {
+	filterCategory = term;
+	shopContentRenderer(term.trim());
+	filterInput.value = '';
+};
+const btnHighlightHandler = (index) => {
+	filterBtns.forEach((btn) => btn.classList.remove('navbar__btn--active'));
+	filterBtns[index].classList.add('navbar__btn--active');
+};
 const sortHandler = (items) => {
-	const selected = sortFilter.value;
-	if (selected == 'A-Z') {
+	const selectedSort = filterSort.value;
+	if (selectedSort === 'A-Z') {
 		items.sort((a, b) => a.title.localeCompare(b.title));
-	} else if (selected == 'Z-A') {
+	} else if (selectedSort === 'Z-A') {
 		items.sort((a, b) => -1 * a.title.localeCompare(b.title));
-	} else if (selected == 'lth') {
+	} else if (selectedSort === 'lth') {
 		items.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-	} else if (selected == 'htl') {
+	} else if (selectedSort === 'htl') {
 		items.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
 	}
 };
 
-const cartQuantityHandler = (title) => {
-	cartItems.forEach((cartItem) =>
-		cartItem.title === title ? cartItem.quantity++ : ''
-	);
-};
+// Handlers to manage cart quantity, price and buying [CART]
+const cartQuantityHandler = (title) =>
+	cartItems.forEach((item) => (item.title === title ? item.quantity++ : ''));
 
 const cartPriceHandler = () => {
 	cartPrice.textContent = `Total price: $${cartItems.reduce((total, item) => {
@@ -103,77 +117,15 @@ const cartPriceHandler = () => {
 	}, 0)}
 	`;
 };
-
-const buyHandler = () => {
+const cartBuyHandler = () => {
 	cartItems.length = 0;
 	cartPrice.textContent = 'Total price: $0';
-	shopItems.forEach((shopItem) => (shopItem.quantity = 0));
-	cartContentHandler();
+	shopItems.forEach((item) => (item.quantity = 0));
+	cartContentRenderer();
 };
 
-const filterInputCategoryHandler = () => {
-	filterCategory = filterInput.value;
-	shopContentHandler(filterCategory.trim());
-	btnHighlightHandler(0);
-};
-const filterBtnCategoryHandler = (term) => {
-	filterCategory = term;
-	shopContentHandler(term.trim());
-	filterInput.value = '';
-};
-const btnHighlightHandler = (index) => {
-	filterBtns.forEach((btn) => btn.classList.remove('navbar__btn--active'));
-	filterBtns[index].classList.add('navbar__btn--active');
-};
-
-const cartContentHandler = () => {
-	cartContent.innerHTML = '';
-	cartItems.forEach((item) => {
-		cartContent.innerHTML += `
-			<div class="cart-card">
-				<img src="${item.img}" alt="" class="cart-card__img" />
-				<div class="cart-card__description">
-					<h2 class="cart-card__title">${item.title}</h2>
-					<p class="cart-card__price">$${item.price}</p>
-					<input type="number" class="cart-card__quantity" value="${item.quantity}" max="99" min="1" data-key="0" />
-				</div>
-				<span class="material-symbols-outlined cart-card__delete" data-key="0">delete</span>
-			</div>
-		
-		`;
-	});
-};
-
-// CART ITEM QUANTITY AND DELETE HANDLERS
-
-cartContent.addEventListener('click', (event) => {
-	const cartItemTitle = event.target
-		.closest('div')
-		.querySelector('.item__title').textContent;
-
-	if (event.target.tagName === 'INPUT') {
-		const cartInputValue = event.target.closest('input').value;
-		cartItems.forEach((cartItem) =>
-			cartItem.title === cartItemTitle
-				? (cartItem.quantity = cartInputValue)
-				: ''
-		);
-	} else if (event.target.tagName === 'SPAN') {
-		cartItems.forEach((cartItem) => {
-			if (cartItem.title === cartItemTitle) {
-				const itemIndex = cartItems.indexOf(cartItem);
-				cartItem.quantity = 0;
-				cartItems.splice(itemIndex, 1);
-			}
-		});
-	}
-	cartContentHandler();
-	cartPriceHandler();
-});
-
-// SHOP CONTENT RENDER HANDLER
-
-const shopContentHandler = (filter = '') => {
+// Shop and cart content renderers
+const shopContentRenderer = (filter = '') => {
 	shopContent.innerHTML = '';
 	sortHandler(shopItems);
 	filteredShopItems = !filter
@@ -198,16 +150,31 @@ const shopContentHandler = (filter = '') => {
         `;
 	});
 };
-shopContentHandler();
+const cartContentRenderer = () => {
+	cartContent.innerHTML = '';
+	cartItems.forEach((item) => {
+		cartContent.innerHTML += `
+			<div class="cart-card">
+				<img src="${item.img}" alt="" class="cart-card__img" />
+				<div class="cart-card__description">
+					<h2 class="cart-card__title">${item.title}</h2>
+					<p class="cart-card__price">$${item.price}</p>
+					<input type="number" class="cart-card__quantity" value="${item.quantity}" max="99" min="1" data-key="0" />
+				</div>
+				<span class="material-symbols-outlined cart-card__delete" data-key="0">delete</span>
+			</div>
+		
+		`;
+	});
+};
 
-// SHOP CONTENT ADD TO CART HANDLER
-
+// Eventlistener to manage shop item add to cart
 shopContent.addEventListener('click', (event) => {
 	if (event.target.tagName === 'SPAN') {
 		const shopItemTitle = event.target
 			.closest('div')
 			.querySelector('.shop-card__title').textContent;
-		const isContain = cartItems.some((item) => item.title == shopItemTitle);
+		const isContain = cartItems.some((item) => item.title === shopItemTitle);
 
 		cartBody.classList.add('cart--visible');
 
@@ -221,23 +188,61 @@ shopContent.addEventListener('click', (event) => {
 				}
 			});
 		}
-		cartContentHandler();
 		cartPriceHandler();
+		cartContentRenderer();
 	}
 });
 
-// CART OPEN AND CLOSE HANDLERS
+// Eventlisteners to manage shopContent filtering and sorting
+filterInput.addEventListener('keyup', inputFilterHandler);
+filterBtns.forEach((btn, index) => {
+	btn.addEventListener('click', (event) => {
+		btnHighlightHandler(index);
 
+		if (event.target.tagName === 'H1') {
+			shopContentRenderer();
+			filterCategory = '';
+		} else {
+			btnFilterHandler(btn.textContent);
+		}
+	});
+});
+filterSort.addEventListener('change', () => {
+	shopContentRenderer(filterCategory);
+});
+
+// EventListeners to manage cart item quantity and cart item cart removal
+cartContent.addEventListener('click', (event) => {
+	const cartItemTitle = event.target
+		.closest('div')
+		.querySelector('.cart-card__title').textContent;
+
+	if (event.target.tagName === 'INPUT') {
+		const cartQuantityValue = event.target.closest('input').value;
+		cartItems.forEach((item) =>
+			item.title === cartItemTitle ? (item.quantity = cartQuantityValue) : ''
+		);
+	} else if (event.target.tagName === 'SPAN') {
+		cartItems.forEach((item) => {
+			if (item.title === cartItemTitle) {
+				const itemIndex = cartItems.indexOf(item);
+				item.quantity = 0;
+				cartItems.splice(itemIndex, 1);
+			}
+		});
+	}
+	cartPriceHandler();
+	cartContentRenderer();
+});
+
+// Eventlisteners to manage cart open and close
 cartOpenBtn.addEventListener('click', () => {
 	cartBody.classList.add('cart--visible');
 });
-
-// CHECK CLOSE MODAL
-
 document.body.addEventListener('click', (event) => {
 	if (
 		(!event.target.closest('.cart') &&
-			!event.target.closest('.cart__item') &&
+			!event.target.closest('.cart-card') &&
 			!event.target.closest('.page-heading') &&
 			!event.target.matches('.header__icon') &&
 			!event.target.matches('.shop-card__icon')) ||
@@ -247,38 +252,7 @@ document.body.addEventListener('click', (event) => {
 	}
 });
 
-// SHOP FILTERS HANDLERS
+// EventListener to manage cart buy
+cartBuyBtn.addEventListener('click', cartBuyHandler);
 
-filterInput.addEventListener('keyup', filterInputCategoryHandler);
-filterBtns.forEach((btn, index) => {
-	btn.addEventListener('click', (event) => {
-		btnHighlightHandler(index);
-
-		if (event.target.tagName === 'H1') {
-			shopContentHandler();
-			filterCategory = '';
-		} else {
-			filterBtnCategoryHandler(btn.textContent);
-		}
-	});
-});
-
-// CART CONTENT QUANTITY
-cartContent.addEventListener('click', (event) => {
-	if (event.target.tagName === 'INPUT') {
-	}
-});
-
-// CART BUY HANDLER
-
-buyBtn.addEventListener('click', buyHandler);
-
-sortFilter.addEventListener('change', () => {
-	shopContentHandler(filterCategory);
-});
-
-// 3. Sprawdzić cały kod czy brakuje funkcji.
-// 4. Refaktoryzacja.
-// COS JEST NIE TAK Z QUANTITY, POWIAZANIE SHOP ITEMS Z CART ITEMS, PO USUNIECIU ZOSTAJE QUANTITY
-
-// ^^^^^^^^^^^^^^^^^ 	shopItems.forEach((shopItem) => (shopItem.quantity = 0)); TYMCZASOWY FIX
+shopContentRenderer();
