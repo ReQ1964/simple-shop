@@ -8,9 +8,8 @@
     width: 100vw;
     background-color: white;
     padding: 2rem;
-    box-shadow: 2px 2px 7px black;
+    box-shadow: 2px 2px 7px $primary_color;
     overflow: scroll;
-    
     .cart__close{
         position: absolute;
         top: 30px;
@@ -27,7 +26,7 @@
         text-transform: uppercase;
         text-align: center;
         margin: 1.2rem;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid $primary_color;
         padding-bottom: 0.8rem;
     }
     &__buy{
@@ -46,20 +45,20 @@
             transform: scale(1.05);
         }
     }
-    &__item{
+    .cart-card{
         @include flex-center-row;
         margin: 0 auto;
         height: 20%;
         width: 100%;
         margin-bottom: 1.5rem;
         padding: 1rem;
-        border: 1px solid black;
-        .item__img{
+        border: 1px solid $primary_color;
+        &__img{
             width: 40%;
             max-width: 200px;
             height: 100%;
         }
-        .item__description{
+        &__description{
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -67,10 +66,10 @@
             width: 50%;
             gap: 1rem;
         }
-        .item__quantity{
+        &__quantity{
             width: 2.3rem;
         }
-        .item__delete{
+        &__delete{
             font-size: 2rem;
             color: red;
             font-weight: bold;
@@ -80,7 +79,7 @@
                 transform: scale(1.05);
             }
         }
-        .item__title{
+        &__title{
             font-size: clamp(1.2rem, 4vw, 1.5rem);
         }
     }

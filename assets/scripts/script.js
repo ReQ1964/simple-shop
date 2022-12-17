@@ -1,13 +1,13 @@
+const cartOpenBtn = document.querySelectorAll('.header__icon')[1];
+const sortFilter = document.querySelector('#navbar__select');
+const filterInput = document.querySelector('#navbar__input');
+const filterBtns = [...document.querySelectorAll('.btn--filter')];
 const shopContent = document.querySelector('.content');
 const cartBody = document.querySelector('.cart');
 const cartContent = document.querySelector('.cart__content');
-const cartOpenBtn = document.querySelectorAll('.header__icon')[1];
 const cartCloseBtn = document.querySelector('.cart__close');
-const filterInput = document.querySelector('#filters__input');
-const filterBtns = [...document.querySelectorAll('.btn--filter')];
-const buyBtn = document.querySelector('.cart__buy');
 const cartPrice = document.querySelector('.cart__price');
-const sortFilter = document.querySelector('#filters__select');
+const buyBtn = document.querySelector('.cart__buy');
 
 let filterCategory;
 const shopItems = [
@@ -130,14 +130,14 @@ const cartContentHandler = () => {
 	cartContent.innerHTML = '';
 	cartItems.forEach((item) => {
 		cartContent.innerHTML += `
-			<div class="cart__item">
-				<img src="${item.img}" alt="" class="item__img" />
-				<div class="item__description">
-					<h2 class="item__title">${item.title}</h2>
-					<p class="item__price">$${item.price}</p>
-					<input type="number" class="item__quantity" value="${item.quantity}" max="99" min="1" data-key="0" />
+			<div class="cart-card">
+				<img src="${item.img}" alt="" class="cart-card__img" />
+				<div class="cart-card__description">
+					<h2 class="cart-card__title">${item.title}</h2>
+					<p class="cart-card__price">$${item.price}</p>
+					<input type="number" class="cart-card__quantity" value="${item.quantity}" max="99" min="1" data-key="0" />
 				</div>
-				<span class="material-symbols-outlined item__delete" data-key="0">delete</span>
+				<span class="material-symbols-outlined cart-card__delete" data-key="0">delete</span>
 			</div>
 		
 		`;
@@ -186,11 +186,11 @@ const shopContentHandler = (filter = '') => {
 
 	filteredShopItems.forEach((item) => {
 		shopContent.innerHTML += `
-            <div class="card">
-				<img src="${item.img}" alt="" class="card__img" />
-				<h2 class="card__title">${item.title}</h2>
-				<p class="card__price">$${item.price}</p>
-				<span class="material-symbols-outlined card__icon">
+            <div class="shop-card">
+				<img src="${item.img}" alt="" class="shop-card__img" />
+				<h2 class="shop-card__title">${item.title}</h2>
+				<p class="shop-card__price">$${item.price}</p>
+				<span class="material-symbols-outlined shop-card__icon">
 					shopping_cart
 				</span>
 			</div>
@@ -206,7 +206,7 @@ shopContent.addEventListener('click', (event) => {
 	if (event.target.tagName === 'SPAN') {
 		const shopItemTitle = event.target
 			.closest('div')
-			.querySelector('.card__title').textContent;
+			.querySelector('.shop-card__title').textContent;
 		const isContain = cartItems.some((item) => item.title == shopItemTitle);
 
 		cartBody.classList.add('cart--visible');
@@ -240,7 +240,7 @@ document.body.addEventListener('click', (event) => {
 			!event.target.closest('.cart__item') &&
 			!event.target.closest('.page-heading') &&
 			!event.target.matches('.header__icon') &&
-			!event.target.matches('.card__icon')) ||
+			!event.target.matches('.shop-card__icon')) ||
 		event.target.matches('.cart__close')
 	) {
 		cartBody.classList.remove('cart--visible');

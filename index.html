@@ -16,11 +16,11 @@
 	<body>
 		<header class="header">
 			<span class="material-symbols-outlined header__icon">account_circle</span>
-			<div class="heading">
+			<div class="header__heading">
 				<a href="#">
-					<img src="assets/images/logo.png" alt="" class="heading__logo" />
+					<img src="assets/images/logo.png" alt="" class="header__logo" />
 				</a>
-				<a href="#" class="heading__title">BudPhones</a>
+				<a href="#" class="header__title">BudPhones</a>
 			</div>
 			<span class="material-symbols-outlined header__icon">shopping_bag</span>
 		</header>
@@ -31,17 +31,17 @@
 				<button class="navbar__btn btn--filter">earbuds</button>
 				<button class="navbar__btn btn--filter">microphones</button>
 				<div class="navbar__filters">
-					<div class="filters__search">
-						<label for="filters__input" class="filters__label"
-							><span class="material-symbols-outlined filters__icon">
+					<div class="navbar__search">
+						<label for="navbar__input" class="navbar__input-label"
+							><span class="material-symbols-outlined navbar__icon">
 								search</span
 							></label
 						>
-						<input type="text" id="filters__input" />
+						<input type="text" id="navbar__input" />
 					</div>
-					<div class="filters__filter">
-						<label for="filters__select" class="filters__label">Sort:</label>
-						<select id="filters__select">
+					<div class="navbar__sort">
+						<label for="navbar__select" class="navbar__sort-label">Sort:</label>
+						<select id="navbar__select">
 							<optgroup label="Alphabetical">
 								<option value="A-Z">A-Z</option>
 								<option value="Z-A">Z-A</option>
@@ -57,9 +57,9 @@
 		</section>
 		<main class="content"></main>
 		<footer class="footer">
-			<div class="footer__policy">
-				<a href="#" class="policy">Privacy policy</a
-				><a href="#" class="policy">Terms of Use</a>
+			<div class="footer__policies">
+				<a href="#" class="footer__policy">Privacy policy</a
+				><a href="#" class="footer__policy">Terms of Use</a>
 			</div>
 			<p class="footer__info">&copy; 2022 BudPhones All Rights Reserved</p>
 		</footer>
@@ -68,7 +68,7 @@
 				<span class="material-symbols-outlined close cart__close">close</span>
 				<h1 class="cart__title">your cart</h1>
 			</div>
-			<section class="cart__content"></section>
+			<div class="cart__content"></div>
 			<p class="cart__price">Total price: $0</p>
 			<button class="cart__buy">buy now</button>
 		</section>

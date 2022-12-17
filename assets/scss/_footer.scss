@@ -5,20 +5,18 @@
     margin-top: 4rem;
     gap: 1rem;
     &, & *{
-        background-color: black;
+        background-color: $primary_color;
         font-size: 0.8rem;
     }
-    &__policy{
+    &__policies{
         @include flex-center-row;
         gap: 1rem;
-        .policy{
-            text-decoration: none;
-            color: inherit;
-        }
     }
-    &__social-link{
-        width: 200px;
+    &__policy{
+        text-decoration: none;
+        color: inherit;
     }
+ 
 
     
 }
