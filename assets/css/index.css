@@ -150,7 +150,7 @@ body {
 .navbar #navbar__input {
   width: clamp(150px, 50vw, 150px);
   font-size: clamp(1rem, 1.4vw, 1.3rem);
-  padding: 0.2rem;
+  padding: 0.5rem;
   border: none;
   border-bottom: 2px solid black;
 }
@@ -178,7 +178,7 @@ body {
   gap: 0.5rem;
   -webkit-transition: all 0.15s;
   transition: all 0.15s;
-  padding-top: 0.5rem;
+  padding-top: 1rem;
   border-bottom: 2px solid black;
 }
 .navbar__sort:hover {
