@@ -5,6 +5,7 @@ const shopContent = document.querySelector('.content');
 const cartBody = document.querySelector('.cart');
 const cartContent = document.querySelector('.cart__content');
 const cartOpenBtn = document.querySelectorAll('.header__icon')[1];
+const accountBtn = document.querySelectorAll('.header__icon')[0];
 const cartCloseBtn = document.querySelector('.cart__close');
 const cartPrice = document.querySelector('.cart__price');
 const cartBuyBtn = document.querySelector('.cart__buy');
@@ -156,6 +157,7 @@ const cartBuyHandler = () => {
 	cartItems.length = 0;
 	cartPrice.textContent = 'Total price: $0';
 	shopItems.forEach((item) => (item.quantity = 0));
+	alert('Sending CART to database...');
 	cartContentRenderer();
 };
 
@@ -288,7 +290,8 @@ document.body.addEventListener('click', (event) => {
 	}
 });
 
-// EventListener to manage cart buy
+// EventListener to manage cart buy and account feature
 cartBuyBtn.addEventListener('click', cartBuyHandler);
+accountBtn.addEventListener('click', () => alert('Feature not implemented!'));
 
 shopContentRenderer();

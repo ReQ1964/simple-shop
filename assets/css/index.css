@@ -150,7 +150,7 @@ body {
 .navbar #navbar__input {
   width: clamp(150px, 50vw, 150px);
   font-size: clamp(1rem, 1.4vw, 1.3rem);
-  padding-top: 0.5rem;
+  padding: 0.2rem;
   border: none;
   border-bottom: 2px solid black;
 }
@@ -229,7 +229,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  gap: 4rem;
+  gap: 3rem;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
