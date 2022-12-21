@@ -3,7 +3,7 @@
     padding: 2rem 0;
     gap: 1rem;
     &__title{
-        font-size: clamp(3rem, 3.5vw, 6rem);
+        font-size: clamp(3rem, 4vw, 6rem);
         cursor:pointer;
         transition: all 0.15s;
         padding: 0.5rem;
@@ -26,11 +26,15 @@
             transform: scale(1.02);
         } 
     }
-    &__icon{
-        font-size: 2rem
+    .navbar__icon{
+        font-size: clamp(1.5rem, 4vw, 2rem);
     }
-    &__input{
+    #navbar__input{
         width: clamp(150px, 50vw, 150px);
+        font-size: clamp(1rem, 1.4vw, 1.3rem);
+        padding-top: 0.5rem;
+        border: none;
+        border-bottom: 2px solid black
     }
     &__input-label{
         @include flex-center-row;
@@ -39,19 +43,25 @@
         @include flex-center-row;
         gap: 0.5rem;
         transition: all 0.15s;
+        padding-top: 0.5rem;
+        border-bottom: 2px solid black;
         &:hover{
             transform: scale(1.02);
         }
+        select{
+            border: none;
+            font-size: clamp(1rem, 1.4vw, 1.2rem);
+        }
     }
     &__sort-label{
-        font-size: clamp(1rem, 1.2vw, 1.3rem);
+        font-size: clamp(1rem, 1.4vw, 1.5rem);
     }
     &__btn{
         background-color: $primary_color;
         width: clamp(300px, 80vw, 400px);
-        padding: 0.5rem;
+        padding: 0.6em 1em;
         border-radius: 0.2rem;
-        font-size: clamp(1rem, 1.25vw, 1.3rem);
+        font-size: clamp(1rem, 1.6vw, 1.3rem);
         color: white;
         text-transform: uppercase;
         transition: all 0.15s;
@@ -62,7 +72,7 @@
         }
     }
     &__btn--active{
-        box-shadow: 0 0 0 4px rgba(180, 51, 51, 0.89);
+        box-shadow: 0 0 0 4px rgb(158, 97, 27);
         border-radius: 0.2rem;
     }
 }

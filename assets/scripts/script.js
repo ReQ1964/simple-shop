@@ -13,67 +13,100 @@ let filterCategory;
 
 const shopItems = [
 	{
-		title: 'Headphones1',
-		price: 220,
+		title: 'HeadsPro',
+		price: 99.99,
 		img: 'assets/images/head1.png',
 		category: 'headphones',
 		quantity: 0,
+		id: 1,
 	},
 	{
-		title: 'Headphones2',
-		price: 100,
+		title: 'HeadsMax',
+		price: 159.99,
 		img: 'assets/images/head2.png',
 		category: 'headphones',
 		quantity: 0,
+		id: 2,
 	},
 	{
-		title: 'Headphones3',
-		price: 150,
+		title: 'NovHeads',
+		price: 399.99,
 		img: 'assets/images/head3.png',
 		category: 'headphones',
 		quantity: 0,
+		id: 3,
 	},
 	{
-		title: 'Headphones4',
-		price: 350,
+		title: 'HeadsBuds',
+		price: 299.99,
 		img: 'assets/images/head4.png',
 		category: 'headphones',
 		quantity: 0,
+		id: 4,
 	},
 	{
-		title: 'Earbuds1',
-		price: 50,
+		title: 'StudHead',
+		price: 350.99,
+		img: 'assets/images/head5.png',
+		category: 'headphones',
+		quantity: 0,
+		id: 5,
+	},
+	{
+		title: 'BudsLite',
+		price: 49.99,
 		img: 'assets/images/buds1.png',
 		category: 'earbuds',
 		quantity: 0,
+		id: 6,
 	},
 	{
-		title: 'Earbuds2',
-		price: 100,
+		title: 'BudsPro',
+		price: 249.99,
 		img: 'assets/images/buds2.png',
 		category: 'earbuds',
 		quantity: 0,
+		id: 7,
 	},
 	{
-		title: 'Microphone1',
-		price: 350,
+		title: 'BudsGo',
+		price: 120.99,
+		img: 'assets/images/buds3.png',
+		category: 'earbuds',
+		quantity: 0,
+		id: 8,
+	},
+	{
+		title: 'SonMic',
+		price: 125.99,
 		img: 'assets/images/mic1.png',
 		category: 'microphones',
 		quantity: 0,
+		id: 9,
 	},
 	{
-		title: 'Microphone2',
-		price: 300,
+		title: 'StudMic',
+		price: 599.99,
 		img: 'assets/images/mic2.png',
 		category: 'microphones',
 		quantity: 0,
+		id: 10,
 	},
 	{
-		title: 'Microphone3',
-		price: 225,
+		title: 'SonMic Pro',
+		price: 399.99,
 		img: 'assets/images/mic3.png',
 		category: 'microphones',
 		quantity: 0,
+		id: 11,
+	},
+	{
+		title: 'StudMic Pro',
+		price: 899.99,
+		img: 'assets/images/mic4.png',
+		category: 'microphones',
+		quantity: 0,
+		id: 12,
 	},
 ];
 
@@ -104,6 +137,8 @@ const sortHandler = (items) => {
 		items.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
 	} else if (selectedSort === 'htl') {
 		items.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+	} else if (selectedSort === 'featured') {
+		items.sort((a, b) => a.id - b.id);
 	}
 };
 
@@ -113,7 +148,7 @@ const cartQuantityHandler = (title) =>
 
 const cartPriceHandler = () => {
 	cartPrice.textContent = `Total price: $${cartItems.reduce((total, item) => {
-		return total + item.quantity * item.price;
+		return Math.round(total + item.quantity * item.price);
 	}, 0)}
 	`;
 };
@@ -244,6 +279,7 @@ document.body.addEventListener('click', (event) => {
 		(!event.target.closest('.cart') &&
 			!event.target.closest('.cart-card') &&
 			!event.target.closest('.page-heading') &&
+			!event.target.closest('.shop-card') &&
 			!event.target.matches('.header__icon') &&
 			!event.target.matches('.shop-card__icon')) ||
 		event.target.matches('.cart__close')

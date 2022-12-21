@@ -2,7 +2,7 @@
     @include flex-center-column;
     color: hsl(0, 0, 84);
     padding: 1rem;
-    margin-top: 4rem;
+    margin-top: 5rem;
     gap: 1rem;
     &, & *{
         background-color: $primary_color;
@@ -15,9 +15,6 @@
     &__policy{
         text-decoration: none;
         color: inherit;
-    }
- 
-
-    
+    }    
 }
 
